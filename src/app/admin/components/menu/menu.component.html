@@ -1,0 +1,36 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav color="primary" #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar >Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item href="#">Dashboard</a>
+      <a mat-list-item href="#">Cursos</a>
+      <a mat-list-item href="#">Pastorais</a>
+      <a mat-list-item href="#">Avisos</a>
+      <a mat-list-item href="#">Paroquianos</a>
+      <a mat-list-item href="#">Seus dados</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+      <span>Paróquia {{paroquia_nome}}</span>
+      <span class="toolbar-spacer"></span>
+      <a (click)="sair()" style="cursor: pointer" alt="Sair" title="Sair" *ngIf="autenticado()">
+          <mat-icon class="toolbar-icon" matTooltip="Sair">
+              exit_to_app
+          </mat-icon>
+      </a>
+      </mat-toolbar>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
