@@ -1,1 +1,1 @@
-export * from './cadastrar';
+export * from './cadastrar-pastoral';

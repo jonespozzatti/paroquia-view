@@ -5,7 +5,7 @@ import {
 	CadastroParoquianoComponent, CadastrarParoquianoComponent
 } from './components';
 
-export const CadastroParoquianoRoutes: Routes = [
+export const cadastroParoquianoRoutes: Routes = [
 	{
 		path: 'cadastro-paroquiano',
 		component: CadastroParoquianoComponent,
@@ -20,7 +20,7 @@ export const CadastroParoquianoRoutes: Routes = [
 
 @NgModule({
   imports: [
-  	RouterModule.forChild(CadastroParoquianoRoutes)
+  	RouterModule.forChild(cadastroParoquianoRoutes)
   ],
   exports: [
     RouterModule

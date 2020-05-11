@@ -1,0 +1,65 @@
+<form [formGroup]="form" novalidate>
+    <mat-form-field>
+      <mat-select placeholder="Pastorais"
+        formControlName="form_pastorais"
+        [(value)]="pastoralId"
+        (selectionChange)="exibirMembros()">
+        <mat-option 
+          *ngFor="let pastoral of pastorais" 
+          [value]="pastoral.id">
+          {{ pastoral.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+</form>
+
+<mat-table #table [dataSource]="dataSource" 
+  matSort (matSortChange)="ordenar($event)">
+
+	<ng-container matColumnDef="nome">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+      	Nome
+      </mat-header-cell>
+      <mat-cell *matCellDef="let membro">
+      	{{ membro.nome }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="tipoParticipantePastoral">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+      	Função
+      </mat-header-cell>
+      <mat-cell *matCellDef="let membro">
+      	{{ membro.tipoParticipantePastoral}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="telefone">
+      <mat-header-cell *matHeaderCellDef>
+      	Telefone
+      </mat-header-cell>
+      <mat-cell *matCellDef="let membro">
+      	{{ membro.telefone }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="acao">
+      <mat-header-cell *matHeaderCellDef>Ação</mat-header-cell>
+      <mat-cell *matCellDef="let membro">
+        <a routerLink="{{ '/admin/atualizarMembroPastoral/' + membro.id }}">
+            <mat-icon matTooltip="Editar membro da pastoral">create</mat-icon></a>
+        <a (click)="removerMembro(membro.id)" 
+          style="cursor: pointer"><mat-icon matTooltip="Remover membro da pastoral">clear</mat-icon></a>
+      </mat-cell>
+    </ng-container>
+
+	<mat-header-row 
+		*matHeaderRowDef="colunas"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: colunas;"></mat-row>
+</mat-table>
+
+<mat-paginator 
+  [length]="totalMembros"
+  [pageSize]="25"
+  (page)="paginar($event)">
+</mat-paginator>
