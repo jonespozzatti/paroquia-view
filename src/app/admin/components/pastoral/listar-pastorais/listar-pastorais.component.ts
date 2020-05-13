@@ -15,12 +15,12 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ListarPastoraisComponent implements OnInit {
 
-  dataSource: MatTableDataSource<Membro>;
-  colunas: string[] = ['nome', 'tipoParticipantePastoral', 'telefone', 'acao'];
+  dataSource: MatTableDataSource<Pastoral>;
+  colunas: string[] = ['nome', 'descricao', 'email', 'acao'];
   pastoralId: string;
-  totalMembros: number;
+  totalPastorais: number;
 
-  pastorais: Pastoral[];
+  
   @ViewChild(MatSelect) matSelect: MatSelect;
   form: FormGroup;
 
@@ -30,7 +30,6 @@ export class ListarPastoraisComponent implements OnInit {
   
   constructor(
   	private pastoralService: PastoralService,
-    private httpUtil: HttpUtilService,
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
     private pessoaPastoralService: PessoapastoralService,
@@ -40,21 +39,15 @@ export class ListarPastoraisComponent implements OnInit {
     this.pagina = 0;
     this.ordemPadrao();
     this.obterPastorais();
-    this.gerarForm();
   }
-
-  gerarForm() {
-    this.form = this.fb.group({
-      form_pastorais: ['', []]
-    });
-  }
-
 
   obterPastorais() {
-    this.pastoralService.listarTodasPastorais()
+    this.pastoralService.listarPastoraisPaginado(this.pagina, this.ordem, this.direcao)
       .subscribe(
         data => {
-          this.pastorais = (data.data as Pastoral[]);
+          this.totalPastorais = data['data'].totalElements;
+          const pastorais = data['data'].content as Pastoral[];
+          this.dataSource = new MatTableDataSource<Pastoral>(pastorais);
         },
         err => {
           const msg: string = "Erro obtendo pastorais.";
@@ -64,36 +57,15 @@ export class ListarPastoraisComponent implements OnInit {
   }
 
   ordemPadrao() {
-    this.ordem = 'id';
-    this.direcao = 'DESC';
+    this.ordem = 'nome';
+    this.direcao = 'ASC';
   }
 
-  exibirMembros() {
-    console.log("-------" + this.matSelect.selected['value']);
-    if (this.matSelect.selected){
-      this.pastoralId = this.matSelect.selected['value'];
-    }else {
-      return;
-    }
-    sessionStorage['pastoralId'] = this.pastoralId;
-    this.pessoaPastoralService.listarMembrosPorPastoralPaginado(
-        this.pastoralId, this.pagina, this.ordem, this.direcao)
-      .subscribe(
-        data => {
-          this.totalMembros = data['data'].totalElements;
-          const membros = data['data'].content as Membro[];
-          this.dataSource = new MatTableDataSource<Membro>(membros);
-        },
-        err => {
-          const msg: string = "Erro obtendo membros da pastoral.";
-          this.snackBar.open(msg, "Erro", { duration: 5000 });
-        }
-      );
-  }
+ 
 
   paginar(pageEvent: PageEvent) {
     this.pagina = pageEvent.pageIndex;
-    this.exibirMembros();
+    this.obterPastorais();
   }
 
   ordenar(sort: Sort) {
@@ -103,10 +75,10 @@ export class ListarPastoraisComponent implements OnInit {
       this.ordem = sort.active;
       this.direcao = sort.direction.toUpperCase();
     }
-    this.exibirMembros();
+    this.obterPastorais();
   }
 
-  removerMembro(membroId: string) {
+  removerPastoral(membroId: string) {
     console.log(membroId);
   }
 

@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 export class PastoralService {
 
   private readonly PATH: string = 'pastoral';
+  private readonly PATH_PASTORAIS_PAG = '/paroquia/pag/{paroquiaId}';
   private readonly PATH_PASTORAIS = '/paroquia/{paroquiaId}';
 
   constructor(
@@ -24,5 +25,15 @@ export class PastoralService {
         '{paroquiaId}', this.httpUtil.obterIdParoquia()),
         this.httpUtil.headers()
     );
+  }
+
+listarPastoraisPaginado(
+    pagina: number,
+    ordem: string,
+    direcao:string): Observable<any> {
+      const url: string = env.baseApiUrl + this.PATH +
+      this.PATH_PASTORAIS_PAG.replace('{paroquiaId}', this.httpUtil.obterIdParoquia());
+      const params: string = '?pag=' + pagina + '&ord=' + ordem + '&dir=' + direcao;
+      return this.http.get(url + params, this.httpUtil.headers());
   }
 }

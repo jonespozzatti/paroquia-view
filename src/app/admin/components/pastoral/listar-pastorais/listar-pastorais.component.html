@@ -1,65 +1,58 @@
-<form [formGroup]="form" novalidate>
-    <mat-form-field>
-      <mat-select placeholder="Pastorais"
-        formControlName="form_pastorais"
-        [(value)]="pastoralId"
-        (selectionChange)="exibirMembros()">
-        <mat-option 
-          *ngFor="let pastoral of pastorais" 
-          [value]="pastoral.id">
-          {{ pastoral.nome }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-</form>
+<span>Pastorais</span>
+<div>
+<a mat-button color="warn" 
+  routerLink="/admin/cadastrarPastoral">
+  Adicionar Pastoral
+</a>
+</div>
 
 <mat-table #table [dataSource]="dataSource" 
-  matSort (matSortChange)="ordenar($event)">
-
-	<ng-container matColumnDef="nome">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
+  matSort (matSortChange)="ordenar($event)" >
+	 <ng-container matColumnDef="nome" >
+      <mat-header-cell *matHeaderCellDef mat-sort-header >
       	Nome
       </mat-header-cell>
-      <mat-cell *matCellDef="let membro">
-      	{{ membro.nome }}
+      <mat-cell *matCellDef="let pastoral">
+      	{{ pastoral.nome }}
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="tipoParticipantePastoral">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
-      	Função
+    <ng-container matColumnDef="descricao"   >
+      <mat-header-cell *matHeaderCellDef mat-sort-header fxHide  fxShow.gt-sm>
+      	Descrição
       </mat-header-cell>
-      <mat-cell *matCellDef="let membro">
-      	{{ membro.tipoParticipantePastoral}}
+      <mat-cell *matCellDef="let pastoral"  fxHide  fxShow.gt-sm >
+      	{{ pastoral.descricao}}
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="telefone">
-      <mat-header-cell *matHeaderCellDef>
-      	Telefone
+    <ng-container matColumnDef="email" >
+      <mat-header-cell *matHeaderCellDef fxHide  fxShow.gt-sm>
+      	Email
       </mat-header-cell>
-      <mat-cell *matCellDef="let membro">
-      	{{ membro.telefone }}
+      <mat-cell *matCellDef="let pastoral" fxHide  fxShow.gt-sm>
+      	{{ pastoral.email }}
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="acao">
+    <ng-container matColumnDef="acao" >
       <mat-header-cell *matHeaderCellDef>Ação</mat-header-cell>
-      <mat-cell *matCellDef="let membro">
-        <a routerLink="{{ '/admin/atualizarMembroPastoral/' + membro.id }}">
-            <mat-icon matTooltip="Editar membro da pastoral">create</mat-icon></a>
-        <a (click)="removerMembro(membro.id)" 
-          style="cursor: pointer"><mat-icon matTooltip="Remover membro da pastoral">clear</mat-icon></a>
+      <mat-cell *matCellDef="let pastoral">
+        <a routerLink="{{ '/admin/atualizarPastoral/' + pastoral.id }}">
+            <mat-icon matTooltip="Editar pastoral">create</mat-icon></a>
+        <a (click)="removerPastoral(pastoral.id)" 
+          style="cursor: pointer"><mat-icon matTooltip="Remover pastoral">clear</mat-icon></a>
       </mat-cell>
     </ng-container>
 
-	<mat-header-row 
+  	<mat-header-row 
 		*matHeaderRowDef="colunas"></mat-header-row>
     <mat-row *matRowDef="let row; columns: colunas;"></mat-row>
 </mat-table>
 
+
 <mat-paginator 
-  [length]="totalMembros"
+  [length]="totalPastorais"
   [pageSize]="25"
   (page)="paginar($event)">
 </mat-paginator>
