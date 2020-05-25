@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { HttpUtilService, Membro, PastoralService, PessoapastoralService, Pastoral } from 'src/app/shared';
+import { PastoralService, Pastoral } from 'src/app/shared';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { MatSelect } from '@angular/material/select';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-listar-pastorais',
@@ -30,10 +30,7 @@ export class ListarPastoraisComponent implements OnInit {
   
   constructor(
   	private pastoralService: PastoralService,
-    private snackBar: MatSnackBar,
-    private fb: FormBuilder,
-    private pessoaPastoralService: PessoapastoralService,
-    private dialog: MatDialog) { }
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.pagina = 0;
@@ -61,8 +58,6 @@ export class ListarPastoraisComponent implements OnInit {
     this.direcao = 'ASC';
   }
 
- 
-
   paginar(pageEvent: PageEvent) {
     this.pagina = pageEvent.pageIndex;
     this.obterPastorais();
@@ -86,22 +81,4 @@ export class ListarPastoraisComponent implements OnInit {
     console.log(membroId);
   }
 
-}
-
-@Component({
-  selector: 'confirmar-dialog',
-  template: `
-    <h1 mat-dialog-title>Deseja realmente remover o lançamento?</h1>
-    <div mat-dialog-actions>
-      <button mat-button [mat-dialog-close]="false" tabindex="-1">
-        Não
-      </button>
-      <button mat-button [mat-dialog-close]="true" tabindex="2">
-        Sim
-      </button>
-    </div>
-  `,
-})
-export class ConfirmarDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 }

@@ -19,7 +19,7 @@ export const AdminRoutes: Routes = [
 		  {path: 'listarPastorais', component: ListarPastoraisComponent},
 		  {path: 'listarCursos', component: ListarCursosComponent},
 		  {path: 'listarAvisos', component: ListarAvisosComponent},
-		  {path: 'listarParoquianos', component: ListarParoquianosComponent}
+		  {path: 'listarMembros/:idPastoral/:nomePastoral', component: ListarParoquianosComponent}
 
 		]
 	}

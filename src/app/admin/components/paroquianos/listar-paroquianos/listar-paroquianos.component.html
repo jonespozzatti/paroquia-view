@@ -1,1 +1,65 @@
-<p>listar-paroquianos works!</p>
+<mat-toolbar>
+  <span class="space" >Colaboradores da Pastoral ({{pastoral_nome}})</span>
+</mat-toolbar>
+<div fxLayout="row">
+  <button mat-raised-button color="warn" 
+    ngClass.xs="mat-icon-button"
+    routerLink="/admin/incluirMembroPastoral/idPastoral"
+    matTooltip="Adicionar colaborador">
+    <mat-icon>library_add</mat-icon>
+    <span fxHide.xs>
+      Adicionar
+    </span>
+  </button>
+</div>
+
+<mat-table #table [dataSource]="dataSource" 
+  matSort (matSortChange)="ordenar($event)">
+	<ng-container matColumnDef="nome">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+      	Nome
+      </mat-header-cell>
+      <mat-cell *matCellDef="let membro">
+      	{{ membro.nome }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="tipoParticipantePastoral">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+      	Função
+      </mat-header-cell>
+      <mat-cell *matCellDef="let membro">
+      	{{ membro.tipoParticipantePastoral}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="telefone">
+      <mat-header-cell *matHeaderCellDef>
+      	Telefone
+      </mat-header-cell>
+      <mat-cell *matCellDef="let membro">
+      	{{ membro.telefone }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="acao">
+      <mat-header-cell *matHeaderCellDef>Ação</mat-header-cell>
+      <mat-cell *matCellDef="let membro">
+        <a routerLink="{{ '/admin/atualizarMembroPastoral/' + membro.id }}">
+            <mat-icon matTooltip="Editar membro da pastoral">create</mat-icon></a>
+        <a (click)="removerMembro(membro)" 
+          style="cursor: pointer"><mat-icon [ngStyle]="{'color':'red'}" matTooltip="Remover membro da pastoral">delete_forever</mat-icon></a>
+      </mat-cell>
+    </ng-container>
+
+	<mat-header-row 
+		*matHeaderRowDef="colunas"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: colunas;"></mat-row>
+</mat-table>
+
+<mat-paginator 
+  [length]="totalMembros"
+  [pageSize]="25"
+  (page)="paginar($event)">
+</mat-paginator>
+

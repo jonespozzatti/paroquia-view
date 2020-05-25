@@ -18,7 +18,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { NgxMaskModule } from 'ngx-mask';
 import { ListarCursosComponent } from './components/curso/listar-cursos/listar-cursos.component';
-import { ListarPastoraisComponent, ConfirmarDialog } from './components/pastoral/listar-pastorais/listar-pastorais.component';
+import { ListarPastoraisComponent } from './components/pastoral/listar-pastorais/listar-pastorais.component';
 import { CadastrarCursoComponent } from './components/curso/cadastrar-curso/cadastrar-curso.component';
 import { CadastrarAvisoComponent } from './components/aviso/cadastrar-aviso/cadastrar-aviso.component';
 import { ListarAvisosComponent } from './components/aviso/listar-avisos/listar-avisos.component';
@@ -50,8 +50,7 @@ import { MatRadioModule } from '@angular/material/radio';
     CadastrarCursoComponent, 
     CadastrarAvisoComponent, 
     ListarAvisosComponent,
-    ListarParoquianosComponent,
-    ConfirmarDialog],
+    ListarParoquianosComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -91,7 +90,6 @@ import { MatRadioModule } from '@angular/material/radio';
     PessoapastoralService,
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     { provide: MatPaginatorIntl, useClass: PtBrMatPaginatorIntl }
-  ],
-  entryComponents: [ ConfirmarDialog ]
+  ]
 })
 export class AdminModule { }

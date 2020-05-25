@@ -1,10 +1,17 @@
-<span>Pastorais</span>
-<div>
-<a mat-button color="warn" 
-  routerLink="/admin/cadastrarPastoral">
-  Adicionar Pastoral
-</a>
-</div>
+<mat-toolbar>
+  <span class="space">Pastorais</span>
+</mat-toolbar>
+  <div fxLayout="row">
+      <button mat-raised-button color="warn" 
+        ngClass.xs="mat-icon-button"
+        routerLink="/admin/cadastrarPastoral"
+        matTooltip="Adicionar Pastoral">
+        <mat-icon>library_add</mat-icon>
+        <span fxHide.xs>
+          Adicionar Pastoral
+        </span>
+      </button>
+  </div> 
 
 <mat-table #table [dataSource]="dataSource" 
   matSort (matSortChange)="ordenar($event)" >
@@ -39,9 +46,11 @@
       <mat-header-cell *matHeaderCellDef>Ação</mat-header-cell>
       <mat-cell *matCellDef="let pastoral">
         <a routerLink="{{ '/admin/atualizarPastoral/' + pastoral.id }}">
-            <mat-icon matTooltip="Editar pastoral">create</mat-icon></a>
+            <mat-icon [ngStyle]="{'color':'green'}" matTooltip="Editar pastoral">edit</mat-icon></a>
+        <a routerLink="{{ '/admin/listarMembros/' + pastoral.id +'/'+ pastoral.nome}}">
+              <mat-icon matTooltip="Listar Membros da pastoral">list</mat-icon></a>    
         <a (click)="removerPastoral(pastoral.id)" 
-          style="cursor: pointer"><mat-icon matTooltip="Remover pastoral">clear</mat-icon></a>
+          style="cursor: pointer" ><mat-icon [ngStyle]="{'color':'red'}" matTooltip="Remover pastoral">delete_forever</mat-icon></a>
       </mat-cell>
     </ng-container>
 
