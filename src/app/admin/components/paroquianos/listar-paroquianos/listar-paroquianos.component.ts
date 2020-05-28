@@ -90,7 +90,6 @@ export class ListarParoquianosComponent implements OnInit {
     
     const confirmDialog = this.dialog.open(ConfirmarDialog, {
       data: {
-        
         title: 'Confirmar exclusão',
         message: 'Tem certeza que deseja excluir da Pastoral:',
         objeto: membro.nome
