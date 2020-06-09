@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { Membro, PastoralService, PessoapastoralService, Pastoral, ConfirmarDialog } from 'src/app/shared';
+import { Membro, PastoralService, PessoapastoralService, Pastoral, ConfirmarDialog, PessoaPastoral, AlterarMembroPastoralComponent } from 'src/app/shared';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { MatSelect } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component({
@@ -30,14 +31,20 @@ export class ListarParoquianosComponent implements OnInit {
   private ordem: string;
   private direcao: string;
 
-  
+  tipoParticipantePastoral: string;
+  nome: string;
+  telefone: string;
+   
   constructor(
   	private pastoralService: PastoralService,
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
     private pessoaPastoralService: PessoapastoralService,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private router: Router,
+    private dialog: MatDialog,
+    public dialogAlterar: MatDialog,
+    @Inject(DOCUMENT) private document: Document
     ) {
       this.route.params.subscribe(params => this.pastoralId = params['idPastoral']);
       this.route.params.subscribe(params => this.pastoral_nome = params['nomePastoral']);
@@ -47,6 +54,21 @@ export class ListarParoquianosComponent implements OnInit {
     this.pagina = 0;
     this.ordemPadrao();
     this.exibirMembros();
+    this.form = this.fb.group({
+      pessoa:['',Validators.required]
+    });
+  }
+
+  openDialog(membro: Membro): void {
+    const dialogRef = this.dialog.open(AlterarMembroPastoralComponent, {
+      width: '250px',
+      data: {nome:membro.nome, tipoParticipantePastoral:membro.tipoParticipantePastoral, telefone:membro.telefone }
+    });
+    console.log(JSON.stringify(membro));
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      console.log(JSON.stringify(result));
+    });
   }
 
   ordemPadrao() {
@@ -87,7 +109,6 @@ export class ListarParoquianosComponent implements OnInit {
 
   
   removerMembro(membro) { 
-    
     const confirmDialog = this.dialog.open(ConfirmarDialog, {
       data: {
         title: 'Confirmar exclusão',
@@ -95,16 +116,58 @@ export class ListarParoquianosComponent implements OnInit {
         objeto: membro.nome
       }
     });
-    
     confirmDialog.afterClosed().subscribe(remover => {
       if (remover) {
+        console.log(JSON.stringify(membro));
         this.remover(membro.id);
       }
     });
   }
-
   remover(membroId: string) {
-    console.log(membroId);
+    this.pessoaPastoralService.remover(membroId)
+      .subscribe(
+        data => {
+          const msg: string = "Membro da pastoral removido com sucesso!";
+          this.snackBar.open(msg, "Sucesso", { duration: 5000 });
+          this.onReload();
+        },
+        err => {
+          let msg: string = "Tente novamente em instantes.";
+          if (err.status == 400) {
+            msg = err.error.errors.join(' ');
+          }
+          this.snackBar.open(msg, "Erro", { duration: 5000 });
+        }
+      );
   }
+
+  adicionarMembroPastoral() {
+    if (this.form.invalid) { return;  }
+
+    var y: number = +this.pastoralId;
+    const pessoaPastoral= new PessoaPastoral( y ,this.form.get('pessoa').value,"INTEGRANTE",null);
+    this.pessoaPastoralService.incluirPessoa_Pastoral(pessoaPastoral)
+      .subscribe(
+        data => {
+          const msg: string = "Pessoa icluída a pastoral com sucesso!";
+          this.snackBar.open(msg, "Sucesso", { duration: 5000 });
+          this.onReload();
+        },
+        err => {
+          let msg: string = "Tente novamente em instantes.";
+          if (err.status == 400) {
+            console.log(JSON.stringify(err));
+            msg = err.error.errors.join(' ');
+          }
+          console.log(JSON.stringify(err));
+          this.snackBar.open(msg, "Erro", { duration: 5000 });
+        }
+      );
+      return false;
+  }
+
+  onReload(){
+    this.document.location.reload(); 
+   }
 
 }

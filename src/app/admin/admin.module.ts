@@ -25,7 +25,7 @@ import { ListarAvisosComponent } from './components/aviso/listar-avisos/listar-a
 import { ListarParoquianosComponent } from './components/paroquianos/listar-paroquianos/listar-paroquianos.component';
 import { PastoralService, HttpUtilService, PessoapastoralService, PtBrMatPaginatorIntl } from '../shared';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
-import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -36,6 +36,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
 import { SharedModule } from '../shared/shared.module';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 
@@ -80,6 +82,9 @@ import { MatRadioModule } from '@angular/material/radio';
     MatDialogModule,
     MatPaginatorModule,
     MatSortModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatOptionModule,
     SharedModule,
     NgxMaskModule.forRoot()
   ],

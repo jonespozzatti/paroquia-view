@@ -6,6 +6,15 @@ import { EnderecoService } from './services/endereco.service';
 import { ConfirmarDialog } from './components';
 import { MatButtonModule} from '@angular/material/button'
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { CbPessoaComponent } from './components/cb-pessoa/cb-pessoa.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatOptionModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AlterarMembroPastoralComponent } from './modals/alterar-membro-pastoral/alterar-membro-pastoral.component';
 
 
 
@@ -13,15 +22,26 @@ import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     MascaraDirective,
-    ConfirmarDialog
+    ConfirmarDialog,
+    CbPessoaComponent,
+    AlterarMembroPastoralComponent
   ],
   imports: [
     CommonModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatOptionModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    FormsModule,
+    FlexLayoutModule
   ],
   exports: [
-    MascaraDirective
+    MascaraDirective,
+    CbPessoaComponent
     
   ],
   providers: [

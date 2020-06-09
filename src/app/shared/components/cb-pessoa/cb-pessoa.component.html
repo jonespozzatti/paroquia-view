@@ -1,0 +1,9 @@
+  <mat-form-field>
+    <input matInput placeholder="Nome" aria-label="m" [matAutocomplete]="auto" id="pessoaPastoral"
+    [formControl]="unitCtrl" maxlength="100" (keyup)="limparSelecao()" (focusout)="validarSelecao()"/>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onSelectionChanged($event)" >
+      <mat-option *ngFor="let pessoa of pessoasFiltradas | async" [value]="pessoa" >
+        <span>{{ pessoa.nome }}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>

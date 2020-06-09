@@ -1,16 +1,25 @@
 <mat-toolbar>
   <span class="space" >Colaboradores da Pastoral ({{pastoral_nome}})</span>
 </mat-toolbar>
-<div fxLayout="row">
+<div fxLayout="row" fxLayoutAlign="start center" id="divAcionar" >
+  <form [formGroup]="form" >
+  
+    <app-cb-pessoa
+        formControlName="pessoa" id="pessoaPastoral" >
+    </app-cb-pessoa>
+  
   <button mat-raised-button color="warn" 
     ngClass.xs="mat-icon-button"
-    routerLink="/admin/incluirMembroPastoral/idPastoral"
-    matTooltip="Adicionar colaborador">
+    (click)="adicionarMembroPastoral()" 
+    matTooltip="Adicionar colaborador"
+    [disabled]="form.invalid">
     <mat-icon>library_add</mat-icon>
     <span fxHide.xs>
       Adicionar
     </span>
   </button>
+</form>
+
 </div>
 
 <mat-table #table [dataSource]="dataSource" 
@@ -45,7 +54,7 @@
     <ng-container matColumnDef="acao">
       <mat-header-cell *matHeaderCellDef>Ação</mat-header-cell>
       <mat-cell *matCellDef="let membro">
-        <a routerLink="{{ '/admin/atualizarMembroPastoral/' + membro.id }}">
+        <a (click)="openDialog(membro)">
             <mat-icon matTooltip="Editar membro da pastoral">create</mat-icon></a>
         <a (click)="removerMembro(membro)" 
           style="cursor: pointer"><mat-icon [ngStyle]="{'color':'red'}" matTooltip="Remover membro da pastoral">delete_forever</mat-icon></a>
