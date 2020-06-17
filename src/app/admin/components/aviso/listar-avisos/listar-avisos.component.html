@@ -1,1 +1,65 @@
-<p>listar-avisos works!</p>
+<mat-toolbar>
+    <span class="space">Avisos</span>
+  </mat-toolbar>
+    <div fxLayout="row">
+        <button mat-raised-button color="warn" 
+          ngClass.xs="mat-icon-button"
+          routerLink="/admin/cadastrarAviso"
+          matTooltip="Adicionar Aviso">
+          <mat-icon>library_add</mat-icon>
+          <span fxHide.xs>
+            Adicionar Aviso
+          </span>
+        </button>
+    </div> 
+  
+  <mat-table #table [dataSource]="dataSource" 
+    matSort (matSortChange)="ordenar($event)" >
+       <ng-container matColumnDef="nome" >
+        <mat-header-cell *matHeaderCellDef mat-sort-header >
+            Nome
+        </mat-header-cell>
+        <mat-cell *matCellDef="let noticia">
+            {{ noticia.nome }}
+        </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="dataApresentacao"   >
+        <mat-header-cell *matHeaderCellDef mat-sort-header fxHide  fxShow.gt-sm>
+            Data de Apresentação
+        </mat-header-cell>
+        <mat-cell *matCellDef="let noticia"  fxHide  fxShow.gt-sm >
+            {{ noticia.dataApresentacao}}
+        </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="ativo" >
+        <mat-header-cell *matHeaderCellDef fxHide  fxShow.gt-sm>
+            Ativo
+        </mat-header-cell>
+        <mat-cell *matCellDef="let noticia" fxHide  fxShow.gt-sm>
+            {{ noticia.ativo }}
+        </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="acao" >
+        <mat-header-cell *matHeaderCellDef>Ação</mat-header-cell>
+        <mat-cell *matCellDef="let noticia">
+          <a routerLink="{{ '/admin/cadastrarAviso/' + noticia.id }}">
+               <mat-icon [ngStyle]="{'color':'green'}" matTooltip="Editar noticia">edit</mat-icon></a>
+          <a (click)="removerNoticia(noticia)" 
+            style="cursor: pointer" ><mat-icon [ngStyle]="{'color':'red'}" matTooltip="Remover noticia">delete_forever</mat-icon></a>
+        </mat-cell>
+      </ng-container>
+  
+        <mat-header-row 
+          *matHeaderRowDef="colunas"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: colunas;"></mat-row>
+  </mat-table>
+  
+  
+  <mat-paginator 
+    [length]="totalNoticias"
+    [pageSize]="25"
+    (page)="paginar($event)">
+  </mat-paginator>

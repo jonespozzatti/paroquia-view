@@ -54,9 +54,16 @@ export class PessoapastoralService {
 
   }
   
-  incluirPessoa_Pastoral(pessoaPastoral: PessoaPastoral): Observable<any> {
+  incluirPessoa_Pastoral( pessoaPastoral: PessoaPastoral): Observable<any> {
     return this.http.post(
         env.baseApiUrl + this.PATH, pessoaPastoral,
+        this.httpUtil.headers()
+    );
+  }
+
+  alterarPessoa_Pastoral(id: string, pessoaPastoral: PessoaPastoral): Observable<any> {
+    return this.http.put(
+        env.baseApiUrl + this.PATH + '/' + id, pessoaPastoral,
         this.httpUtil.headers()
     );
   }
@@ -66,5 +73,9 @@ export class PessoapastoralService {
       env.baseApiUrl + this.PATH + '/' + membroId,
       this.httpUtil.headers()
     );
+  }
+
+  listarFuncoes(): Observable<any>  {
+    return this.http.get<Array<string>>(env.baseApiUrl + this.PATH+'/funcao', this.httpUtil.headers());
   }
 }

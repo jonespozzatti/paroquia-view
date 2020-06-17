@@ -15,8 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AlterarMembroPastoralComponent } from './modals/alterar-membro-pastoral/alterar-membro-pastoral.component';
-
-
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -24,7 +23,7 @@ import { AlterarMembroPastoralComponent } from './modals/alterar-membro-pastoral
     MascaraDirective,
     ConfirmarDialog,
     CbPessoaComponent,
-    AlterarMembroPastoralComponent
+    AlterarMembroPastoralComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +32,7 @@ import { AlterarMembroPastoralComponent } from './modals/alterar-membro-pastoral
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     MatOptionModule,
     MatIconModule,
     ReactiveFormsModule,

@@ -1,1 +1,54 @@
-<p>cadastrar-aviso works!</p>
+<mat-toolbar>
+    <span class="space">Cadastrar Aviso</span>
+</mat-toolbar>
+<form [formGroup]="form" fxLayout="column"  fxLayoutAlign="center">
+    <mat-list class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+        <mat-list-item>
+          <label for="nome">Nome: </label>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Nome da Aviso"
+                formControlName="nome">
+          </mat-form-field>
+        </mat-list-item>
+    </mat-list>
+    <mat-list class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+        <mat-list-item>
+            <label for="descricao">Descrição: </label>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Descrição  da Aviso" 
+                  formControlName="descricao">
+            </mat-form-field>
+        </mat-list-item>
+    </mat-list>
+    <mat-list class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+    <mat-list-item>
+        <label for="descricao">Data Apresentação: </label>
+        <mat-form-field fxFlex> 
+          <input matInput [matDatepicker]="picker" placeholder="Data de Apresentaçao" formControlName="dataApresentacao" id="dataApresentacao" 
+              readonly (click)="picker.open()">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </mat-list-item>
+    </mat-list>
+    <mat-list class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+        <mat-list-item>
+            <label for="descricao">Aviso Ativo: </label>
+            <mat-slide-toggle formControlName="ativo" color="primary" checked="avisoAtivo" ></mat-slide-toggle>
+        </mat-list-item>
+    </mat-list>
+    <mat-list class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+        <mat-list-item fxLayoutAlign="center" fxFlex>
+          <button mat-raised-button color="primary"
+              [disabled]="form.invalid" *ngIf="this.isButtonVisible" (click)="cadastrar()">
+              Cadastrar
+          </button>
+          <button mat-raised-button color="primary"
+              [disabled]="form.invalid" *ngIf="!this.isButtonVisible" (click)="alterar()">
+              Alterar
+          </button>
+          &nbsp;
+          <a mat-raised-button routerLink="/admin/listarAvisos">Voltar</a>
+        </mat-list-item>
+    </mat-list>
+</form>

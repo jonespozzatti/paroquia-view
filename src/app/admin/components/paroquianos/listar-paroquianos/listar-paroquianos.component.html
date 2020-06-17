@@ -55,7 +55,7 @@
       <mat-header-cell *matHeaderCellDef>Ação</mat-header-cell>
       <mat-cell *matCellDef="let membro">
         <a (click)="openDialog(membro)">
-            <mat-icon matTooltip="Editar membro da pastoral">create</mat-icon></a>
+            <mat-icon [ngStyle]="{'color':'blue'}" matTooltip="Editar membro da pastoral">create</mat-icon></a>
         <a (click)="removerMembro(membro)" 
           style="cursor: pointer"><mat-icon [ngStyle]="{'color':'red'}" matTooltip="Remover membro da pastoral">delete_forever</mat-icon></a>
       </mat-cell>

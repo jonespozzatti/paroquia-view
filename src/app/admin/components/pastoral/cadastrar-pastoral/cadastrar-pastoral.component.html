@@ -1,1 +1,54 @@
-<p>cadastrar-pastoral works!</p>
+<mat-toolbar>
+    <span class="space">Cadastrar Pastoral</span>
+</mat-toolbar>
+<form [formGroup]="form" fxLayout="column"  fxLayoutAlign="center">
+    <mat-list class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+        <mat-list-item>
+          <label for="nome">Nome: </label>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Nome da Pastoral"
+                formControlName="nome">
+          </mat-form-field>
+        </mat-list-item>
+    </mat-list>
+    <mat-list class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+        <mat-list-item>
+          <label for="email">Email: </label>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Email da Pastoral"
+                formControlName="email">
+          </mat-form-field>
+        </mat-list-item>
+      </mat-list>
+    <mat-list class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+        <mat-list-item>
+            <label for="descricao">Descrição: </label>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Descrição  da Pastoral" 
+                  formControlName="descricao">
+            </mat-form-field>
+        </mat-list-item>
+    </mat-list>
+    <mat-list class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px" *ngIf="this.isButtonVisible">
+        <mat-list-item>
+            <label for="responsavel">Coordenador: </label>
+            <app-cb-pessoa
+                formControlName="responsavel" id="pessoaPastoral">
+            </app-cb-pessoa>
+        </mat-list-item>
+    </mat-list>
+    <mat-list class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+        <mat-list-item fxLayoutAlign="center" fxFlex>
+          <button mat-raised-button color="primary"
+              [disabled]="form.invalid" *ngIf="this.isButtonVisible" (click)="cadastrar()">
+              Cadastrar
+          </button>
+          <button mat-raised-button color="primary"
+              [disabled]="form.invalid" *ngIf="!this.isButtonVisible" (click)="alterar()">
+              Alterar
+          </button>
+          &nbsp;
+          <a mat-raised-button routerLink="/admin/listarPastorais">Voltar</a>
+        </mat-list-item>
+    </mat-list>
+</form>

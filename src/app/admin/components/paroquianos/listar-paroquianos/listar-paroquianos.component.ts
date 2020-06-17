@@ -34,6 +34,7 @@ export class ListarParoquianosComponent implements OnInit {
   tipoParticipantePastoral: string;
   nome: string;
   telefone: string;
+  funcoes: string[];
    
   constructor(
   	private pastoralService: PastoralService,
@@ -57,18 +58,58 @@ export class ListarParoquianosComponent implements OnInit {
     this.form = this.fb.group({
       pessoa:['',Validators.required]
     });
+    this.carregarFuncoes();
   }
 
   openDialog(membro: Membro): void {
+   
     const dialogRef = this.dialog.open(AlterarMembroPastoralComponent, {
       width: '250px',
-      data: {nome:membro.nome, tipoParticipantePastoral:membro.tipoParticipantePastoral, telefone:membro.telefone }
+      data: {
+        nome:membro.nome, 
+        tipoParticipantePastoral:membro.tipoParticipantePastoral, 
+        telefone:membro.telefone,
+        funcoes: this.funcoes
+      }
     });
-    console.log(JSON.stringify(membro));
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-      console.log(JSON.stringify(result));
+   
+    dialogRef.afterClosed().subscribe(alterar => {
+      if (alterar) {
+        alert(JSON.stringify(alterar));
+        this.alterar_funcao(membro, alterar);
+      }
     });
+  }
+
+  alterar_funcao(membro: Membro, alterar: any) {
+    var pastoralID: number = +membro.pastoralId;
+      var pessoaID: number = +membro.pessoaId;
+      const pessoaPastoral= new PessoaPastoral( pastoralID ,pessoaID,alterar.tipoParticipantePastoral,membro.id);
+      this.pessoaPastoralService.alterarPessoa_Pastoral(membro.id, pessoaPastoral)
+      .subscribe(
+        data => {
+          const msg: string = "Função da pessoa alterada com sucesso!";
+          this.snackBar.open(msg, "Sucesso", { duration: 5000 });
+          this.onReload();
+        },
+        err => {
+          let msg: string = "Tente novamente em instantes.";
+          if (err.status == 400) {
+            msg = err.error.errors.join(' ');
+          }
+          this.snackBar.open(msg, "Erro", { duration: 5000 });
+        }
+      );
+  }
+
+  carregarFuncoes(){
+    this.pessoaPastoralService.listarFuncoes()
+    .subscribe(
+      data => {
+        this.funcoes=data['data'];
+      }
+    )
+  
   }
 
   ordemPadrao() {
@@ -118,7 +159,6 @@ export class ListarParoquianosComponent implements OnInit {
     });
     confirmDialog.afterClosed().subscribe(remover => {
       if (remover) {
-        console.log(JSON.stringify(membro));
         this.remover(membro.id);
       }
     });
@@ -156,10 +196,8 @@ export class ListarParoquianosComponent implements OnInit {
         err => {
           let msg: string = "Tente novamente em instantes.";
           if (err.status == 400) {
-            console.log(JSON.stringify(err));
             msg = err.error.errors.join(' ');
           }
-          console.log(JSON.stringify(err));
           this.snackBar.open(msg, "Erro", { duration: 5000 });
         }
       );

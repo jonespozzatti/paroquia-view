@@ -1,22 +1,19 @@
-<h1 mat-dialog-title>You are from {{data.nome}}</h1>
-
+<h1 mat-dialog-title>Alterar a função do membro: {{data.nome}}</h1>
 <div mat-dialog-content>
-
-    <p>What's your favorite city?</p>
     <mat-form-field>
-        <mat-label>Favorite City</mat-label>
-        <input matInput [(ngModel)]="data.tipoParticipantePastoral">
+        <mat-label>Função: </mat-label>
+        <mat-select [(ngModel)]="data.tipoParticipantePastoral" placeholder="Função">
+            <mat-option *ngFor="let funcao of data.funcoes" [value]="funcao">
+              {{funcao}}
+            </mat-option>
+          </mat-select>
     </mat-form-field>
-
-    <p>Your favorite food?</p>
-    <mat-form-field>
-        <mat-label>Favorite Food</mat-label>
-        <input matInput [(ngModel)]="data.telefone">
-    </mat-form-field>
-
 </div>
-
 <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Get Food</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Get City</button>
+    <button mat-button [ngStyle]="{'background':'green'}" [mat-dialog-close]="data" cdkFocusInitial>
+        Alterar
+    </button>
+    <button mat-button [mat-dialog-close]="false">
+        Cancelar
+    </button>
 </div>

@@ -37,8 +37,11 @@ export class CbPessoaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    if (typeof this.pastoralId === "undefined"){
+      this.pastoralId ='0';
+    }
     this.unitCtrl = new FormControl();
+      
         this.pessoaPastoralService.listarPessoasNaoPertecemPastoralID(this.pastoralId).subscribe(retorno => {
             this.pessoas = retorno;
             this.pessoasFiltradas = this.unitCtrl.valueChanges.pipe(

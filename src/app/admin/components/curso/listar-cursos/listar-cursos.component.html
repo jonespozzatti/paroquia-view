@@ -1,1 +1,67 @@
-<p>listar-cursos works!</p>
+<mat-toolbar>
+    <span class="space">Cursos</span>
+  </mat-toolbar>
+    <div fxLayout="row">
+        <button mat-raised-button color="warn" 
+          ngClass.xs="mat-icon-button"
+          routerLink="/admin/cadastrarCurso"
+          matTooltip="Adicionar Curso">
+          <mat-icon>library_add</mat-icon>
+          <span fxHide.xs>
+            Adicionar Cursos
+          </span>
+        </button>
+    </div> 
+  
+  <mat-table #table [dataSource]="dataSource" 
+    matSort (matSortChange)="ordenar($event)" >
+       <ng-container matColumnDef="nome" >
+        <mat-header-cell *matHeaderCellDef mat-sort-header >
+            Nome
+        </mat-header-cell>
+        <mat-cell *matCellDef="let curso">
+            {{ curso.nome }}
+        </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="descricao"   >
+        <mat-header-cell *matHeaderCellDef mat-sort-header fxHide  fxShow.gt-sm>
+            Descrição
+        </mat-header-cell>
+        <mat-cell *matCellDef="let curso"  fxHide  fxShow.gt-sm >
+            {{ curso.descricao}}
+        </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="email" >
+        <mat-header-cell *matHeaderCellDef fxHide  fxShow.gt-sm>
+            Email
+        </mat-header-cell>
+        <mat-cell *matCellDef="let curso" fxHide  fxShow.gt-sm>
+            {{ curso.email }}
+        </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="acao" >
+        <mat-header-cell *matHeaderCellDef>Ação</mat-header-cell>
+        <mat-cell *matCellDef="let curso">
+          <a routerLink="{{ '/admin/cadastrarCurso/' + curso.id }}">
+              <mat-icon [ngStyle]="{'color':'green'}" matTooltip="Editar curso">edit</mat-icon></a>
+          <a routerLink="{{ '/admin/listarMembros/' + curso.id +'/'+ curso.nome}}">
+                <mat-icon matTooltip="Listar Membros da curso">list</mat-icon></a>    
+          <a (click)="removerCurso(curso)" 
+            style="cursor: pointer" ><mat-icon [ngStyle]="{'color':'red'}" matTooltip="Remover curso">delete_forever</mat-icon></a>
+        </mat-cell>
+      </ng-container>
+  
+        <mat-header-row 
+          *matHeaderRowDef="colunas"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: colunas;"></mat-row>
+  </mat-table>
+  
+  
+  <mat-paginator 
+    [length]="totalCursos"
+    [pageSize]="25"
+    (page)="paginar($event)">
+  </mat-paginator>

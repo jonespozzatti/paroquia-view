@@ -1,1 +1,37 @@
-<p>cadastrar-curso works!</p>
+<mat-toolbar>
+    <span class="space">Cadastrar Curso</span>
+</mat-toolbar>
+<form [formGroup]="form" fxLayout="column"  fxLayoutAlign="center">
+    <mat-list class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+        <mat-list-item>
+          <label for="nome">Nome: </label>
+          <mat-form-field fxFlex>
+            <input matInput placeholder="Nome da Curso"
+                formControlName="nome">
+          </mat-form-field>
+        </mat-list-item>
+    </mat-list>
+    <mat-list class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+        <mat-list-item>
+            <label for="descricao">Descrição: </label>
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Descrição  da Curso" 
+                  formControlName="descricao">
+            </mat-form-field>
+        </mat-list-item>
+    </mat-list>
+    <mat-list class="input-row" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" fxLayoutGap.lt-md="0px">
+        <mat-list-item fxLayoutAlign="center" fxFlex>
+          <button mat-raised-button color="primary"
+              [disabled]="form.invalid" *ngIf="this.isButtonVisible" (click)="cadastrar()">
+              Cadastrar
+          </button>
+          <button mat-raised-button color="primary"
+              [disabled]="form.invalid" *ngIf="!this.isButtonVisible" (click)="alterar()">
+              Alterar
+          </button>
+          &nbsp;
+          <a mat-raised-button routerLink="/admin/listarCursos">Voltar</a>
+        </mat-list-item>
+    </mat-list>
+</form>

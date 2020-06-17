@@ -38,6 +38,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 
@@ -85,6 +86,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatAutocompleteModule,
     MatFormFieldModule,
     MatOptionModule,
+    MatSlideToggleModule,
     SharedModule,
     NgxMaskModule.forRoot()
   ],

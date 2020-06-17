@@ -45,11 +45,11 @@
     <ng-container matColumnDef="acao" >
       <mat-header-cell *matHeaderCellDef>Ação</mat-header-cell>
       <mat-cell *matCellDef="let pastoral">
-        <a routerLink="{{ '/admin/atualizarPastoral/' + pastoral.id }}">
+        <a routerLink="{{ '/admin/cadastrarPastoral/' + pastoral.id }}">
             <mat-icon [ngStyle]="{'color':'green'}" matTooltip="Editar pastoral">edit</mat-icon></a>
         <a routerLink="{{ '/admin/listarMembros/' + pastoral.id +'/'+ pastoral.nome}}">
               <mat-icon matTooltip="Listar Membros da pastoral">list</mat-icon></a>    
-        <a (click)="removerPastoral(pastoral.id)" 
+        <a (click)="removerPastoral(pastoral)" 
           style="cursor: pointer" ><mat-icon [ngStyle]="{'color':'red'}" matTooltip="Remover pastoral">delete_forever</mat-icon></a>
       </mat-cell>
     </ng-container>
