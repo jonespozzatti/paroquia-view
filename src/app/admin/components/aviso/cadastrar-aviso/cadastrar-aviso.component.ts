@@ -16,7 +16,6 @@ export class CadastrarAvisoComponent implements OnInit {
   idNoticia: string; 
   noticia: Noticia;
   isButtonVisible: boolean =true;
-  avisoAtivo = true; 
   
   constructor(
     private router: Router,
@@ -25,7 +24,7 @@ export class CadastrarAvisoComponent implements OnInit {
     private snackBar: MatSnackBar,
     private httpUtilService: HttpUtilService,
     private route: ActivatedRoute) {
-      this.route.params.subscribe(params => this.idNoticia = params['idNoticia']);     
+      this.route.params.subscribe(params => this.idNoticia = params['idAviso']);     
     }
  
   ngOnInit(): void {
@@ -58,6 +57,7 @@ export class CadastrarAvisoComponent implements OnInit {
       dataApresentacao: ['', [Validators.required, Validators.minLength(6)]],
       ativo: ['']
     });
+    this.form.get('ativo').setValue(true);
   }
 
   cadastrar() {
@@ -70,7 +70,7 @@ export class CadastrarAvisoComponent implements OnInit {
         data => {
           const msg: string = "Noticia cadastrada com sucesso.";
           this.snackBar.open(msg, "Sucesso", { duration: 5000 });
-          this.router.navigate(['/admin/listarNoticias']);
+          this.router.navigate(['/admin/listarAvisos']);
         },
         err => {
           let msg: string = "Tente novamente em instantes.";
@@ -94,7 +94,7 @@ export class CadastrarAvisoComponent implements OnInit {
         data => {
           const msg: string = "Noticia alterado com sucesso.";
           this.snackBar.open(msg, "Sucesso", { duration: 5000 });
-          this.router.navigate(['/admin/listarNoticias']);
+          this.router.navigate(['/admin/listarAvisos']);
         },
         err => {
           let msg: string = "Tente novamente em instantes.";

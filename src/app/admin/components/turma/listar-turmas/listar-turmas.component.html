@@ -1,44 +1,44 @@
 <mat-toolbar>
-    <span class="space">Cursos</span>
+    <span class="space">Turmas do curso {{nome_curso}}</span>
   </mat-toolbar>
     <div fxLayout="row">
         <button mat-raised-button color="warn" 
           ngClass.xs="mat-icon-button"
-          routerLink="/admin/cadastrarCurso"
-          matTooltip="Adicionar Curso">
+          routerLink="/admin/cadastrarTurma"
+          matTooltip="Adicionar Turma">
           <mat-icon>library_add</mat-icon>
           <span fxHide.xs>
-            Adicionar Cursos
+            Adicionar Turma
           </span>
         </button>
     </div> 
   
   <mat-table #table [dataSource]="dataSource" 
     matSort (matSortChange)="ordenar($event)" >
-       <ng-container matColumnDef="nome" >
+       <ng-container matColumnDef="descricao" >
         <mat-header-cell *matHeaderCellDef mat-sort-header >
-            Nome
+            Descricao
         </mat-header-cell>
-        <mat-cell *matCellDef="let curso">
-            {{ curso.nome }}
+        <mat-cell *matCellDef="let turma">
+            {{ turma.descricao }}
         </mat-cell>
       </ng-container>
   
-      <ng-container matColumnDef="descricao"   >
+      <ng-container matColumnDef="dataInicio"   >
         <mat-header-cell *matHeaderCellDef mat-sort-header fxHide  fxShow.gt-sm>
-            Descrição
+            Data de Início
         </mat-header-cell>
-        <mat-cell *matCellDef="let curso"  fxHide  fxShow.gt-sm >
-            {{ curso.descricao}}
+        <mat-cell *matCellDef="let turma"  fxHide  fxShow.gt-sm >
+            {{ turma.dataInicio}}
         </mat-cell>
       </ng-container>
   
-      <ng-container matColumnDef="email" >
+      <ng-container matColumnDef="dataFim" >
         <mat-header-cell *matHeaderCellDef fxHide  fxShow.gt-sm>
-            Email
+            Data Fim
         </mat-header-cell>
-        <mat-cell *matCellDef="let curso" fxHide  fxShow.gt-sm>
-            {{ curso.email }}
+        <mat-cell *matCellDef="let turma" fxHide  fxShow.gt-sm>
+            {{ turma.dataFim }}
         </mat-cell>
       </ng-container>
   
@@ -47,8 +47,8 @@
         <mat-cell *matCellDef="let curso">
           <a routerLink="{{ '/admin/cadastrarCurso/' + curso.id }}">
               <mat-icon [ngStyle]="{'color':'green'}" matTooltip="Editar curso">edit</mat-icon></a>
-          <a routerLink="{{ '/admin/listarTurmas/' + curso.id +'/'+ curso.nome}}">
-                <mat-icon matTooltip="Listar Turmas da curso">list</mat-icon></a>    
+          <a routerLink="{{ '/admin/listarMembros/' + curso.id +'/'+ curso.nome}}">
+                <mat-icon matTooltip="Listar Membros da curso">list</mat-icon></a>    
           <a (click)="removerCurso(curso)" 
             style="cursor: pointer" ><mat-icon [ngStyle]="{'color':'red'}" matTooltip="Remover curso">delete_forever</mat-icon></a>
         </mat-cell>
@@ -61,7 +61,7 @@
   
   
   <mat-paginator 
-    [length]="totalCursos"
+    [length]="totalTurmas"
     [pageSize]="25"
     (page)="paginar($event)">
   </mat-paginator>

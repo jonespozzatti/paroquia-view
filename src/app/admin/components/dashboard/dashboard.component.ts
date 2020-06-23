@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { NoticiaService } from 'src/app/shared/services/noticia.service';
+import { Card } from 'src/app/shared';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,25 +11,18 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 })
 export class DashboardComponent {
   /** Based on the screen size, switch from standard to one column per row */
-  cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
-    map(({ matches }) => {
-      if (matches) {
-        return [
-          { title: 'Card 1', descricao: 'Card 1 Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1', cols: 1, rows: 1 },
-          { title: 'Card 2', descricao: 'Card 1 Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1', cols: 1, rows: 1 },
-          { title: 'Card 3', descricao: 'Card 1 Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1', cols: 1, rows: 1 },
-          { title: 'Card 4', descricao: 'Card 1 Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1 Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1', cols: 1, rows: 1 }
-        ];
-      }
-
-      return [
-        { title: 'Card 1', descricao: 'Card 1 Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1 Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1',cols: 2, rows: 1 },
-        { title: 'Card 2', descricao: 'Card 1 Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1',cols: 1, rows: 1 },
-        { title: 'Card 3', descricao: 'Card 1 Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1 Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1',cols: 1, rows: 2 },
-        { title: 'Card 4', descricao: 'Card 1 Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1Card 1',cols: 1, rows: 1 }
-      ];
-    })
-  );
-
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  cartoes: Card[];
+ 
+  constructor(private breakpointObserver: BreakpointObserver,
+    private noticiaService: NoticiaService) {
+      this.breakpointObserver.observe(Breakpoints.Handset).subscribe(
+        dataBreak => {  
+            this.noticiaService.listarCards(dataBreak['matches'])
+            .subscribe(
+              data => {
+                this.cartoes = data['data'] as Card[];
+              }
+            );
+        })
+    }
 }

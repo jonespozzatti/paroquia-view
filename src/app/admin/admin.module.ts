@@ -12,17 +12,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { AdminComponent } from './components/admin.component';
-import { CadastrarPastoralComponent } from './components/pastoral/cadastrar-pastoral/cadastrar-pastoral.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { NgxMaskModule } from 'ngx-mask';
-import { ListarCursosComponent } from './components/curso/listar-cursos/listar-cursos.component';
-import { ListarPastoraisComponent } from './components/pastoral/listar-pastorais/listar-pastorais.component';
-import { CadastrarCursoComponent } from './components/curso/cadastrar-curso/cadastrar-curso.component';
-import { CadastrarAvisoComponent } from './components/aviso/cadastrar-aviso/cadastrar-aviso.component';
-import { ListarAvisosComponent } from './components/aviso/listar-avisos/listar-avisos.component';
-import { ListarParoquianosComponent } from './components/paroquianos/listar-paroquianos/listar-paroquianos.component';
 import { PastoralService, HttpUtilService, PessoapastoralService, PtBrMatPaginatorIntl } from '../shared';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MAT_DATE_LOCALE, MatNativeDateModule, MatOptionModule } from '@angular/material/core';
@@ -39,6 +32,16 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { CadastrarTurmaComponent, 
+         ListarTurmasComponent, 
+         CadastrarPastoralComponent, 
+         CadastrarAvisoComponent, 
+         ListarAvisosComponent, 
+         ListarCursosComponent,
+         CadastrarCursoComponent,
+         ListarParoquianosComponent,
+         ListarPastoraisComponent} from './components';
+
 
 
 
@@ -53,7 +56,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     CadastrarCursoComponent, 
     CadastrarAvisoComponent, 
     ListarAvisosComponent,
-    ListarParoquianosComponent],
+    ListarParoquianosComponent,
+    CadastrarTurmaComponent,
+    ListarTurmasComponent],
   imports: [
     CommonModule,
     RouterModule,

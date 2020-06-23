@@ -12,6 +12,7 @@ export class NoticiaService {
 
   private readonly PATH: string = 'noticia';
   private readonly PATH_NOTICIAS_PAG = '/paroquia/pag/{paroquiaId}';
+  private readonly PATH_CARD = '/card/{paroquiaId}';
   
 
   constructor(
@@ -26,6 +27,13 @@ export class NoticiaService {
       const url: string = env.baseApiUrl + this.PATH +
       this.PATH_NOTICIAS_PAG.replace('{paroquiaId}', this.httpUtil.obterIdParoquia());
       const params: string = '?pag=' + pagina + '&ord=' + ordem + '&dir=' + direcao;
+      return this.http.get(url + params, this.httpUtil.headers());
+  }
+
+  listarCards(matches: boolean): Observable<any> {
+      const url: string = env.baseApiUrl + this.PATH +
+      this.PATH_CARD.replace('{paroquiaId}', this.httpUtil.obterIdParoquia());
+      const params: string = '?matches=' + matches
       return this.http.get(url + params, this.httpUtil.headers());
   }
 

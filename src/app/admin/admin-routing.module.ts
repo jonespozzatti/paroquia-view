@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './components/admin.component';
-import { MenuComponent, DashboardComponent, CadastrarPastoralComponent } from './components';
+import { MenuComponent, DashboardComponent, CadastrarPastoralComponent, ListarTurmasComponent } from './components';
 import { ListarPastoraisComponent } from './components/pastoral/listar-pastorais/listar-pastorais.component';
 import { ListarCursosComponent } from './components/curso/listar-cursos/listar-cursos.component';
 import { ListarAvisosComponent } from './components/aviso/listar-avisos/listar-avisos.component';
@@ -27,7 +27,8 @@ export const AdminRoutes: Routes = [
 		  {path: 'listarAvisos', component: ListarAvisosComponent},
 		  {path: 'cadastrarAviso', component: CadastrarAvisoComponent},
 		  {path: 'cadastrarAviso/:idAviso', component: CadastrarAvisoComponent},
-		  {path: 'listarMembros/:idPastoral/:nomePastoral', component: ListarParoquianosComponent}
+		  {path: 'listarMembros/:idPastoral/:nomePastoral', component: ListarParoquianosComponent},
+		  {path: 'listarTurmas/:idCurso/:nomeCurso', component: ListarTurmasComponent}
 		  
 
 		]
